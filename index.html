@@ -3,31 +3,135 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>calculator</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>آلة حاسبة بسيطة - صفحة واحدة</title>
+
+  <!-- ===================== CSS داخل نفس الصفحة ===================== -->
+  <style>
+    /* خلفية الصفحة وتوسيط المحتوى */
+    body {
+      background: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: Arial;
+    }
+
+    /* صندوق الآلة الحاسبة */
+    .calculator {
+      background: white;
+      padding: 20px;
+      width: 300px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #ccc;
+      text-align: center;
+    }
+
+    /* الحقول والقائمة */
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 5px;
+      border: 1px solid #aaa;
+    }
+
+    /* زر احسب */
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #1e88e5;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background: #0d47a1;
+    }
+
+    #result {
+      margin-top: 15px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+  </style>
 </head>
 
 <body>
 
   <div class="calculator">
-    <h2>calculator</h2>
+    <h2>آلة حاسبة بسيطة</h2>
 
-    <input type="number" id="num1" placeholder="first_number">
-    <input type="number" id="num2" placeholder="second_number ">
+    <!-- مدخل الرقم الأول -->
+    <input type="number" id="num1" placeholder="الرقم الأول">
 
+    <!-- مدخل الرقم الثاني -->
+    <input type="number" id="num2" placeholder="الرقم الثاني">
+
+    <!-- اختيار العملية الحسابية -->
     <select id="operation">
-      <option value="add">add</option>
-      <option value="sub">sub</option>
-      <option value="mul">mul</option>
+      <option value="add">جمع</option>
+      <option value="sub">طرح</option>
+      <option value="mul">ضرب</option>
       <option value="div">قسمة</option>
     </select>
 
+    <!-- زر تنفيذ العملية -->
     <button onclick="calculate()">احسب</button>
 
+    <!-- مكان عرض النتيجة -->
     <div id="result"></div>
   </div>
 
-  <script src="script.js"></script>
+  <!-- ===================== JavaScript داخل نفس الصفحة ===================== -->
+  <script>
+    function calculate() {
+      // قراءة القيم من الحقول وتحويلها لأرقام
+      let n1 = Number(document.getElementById("num1").value);
+      let n2 = Number(document.getElementById("num2").value);
+      let op = document.getElementById("operation").value;
+      let result;
+
+      // ------------------ التحقق باستخدام if ------------------
+      // هنا نتأكد أن المستخدم أدخل أرقام صحيحة قبل البدء بالحساب
+      if (isNaN(n1) || isNaN(n2)) {
+        document.getElementById("result").innerHTML = "الرجاء إدخال أرقام صحيحة";
+        return;
+      }
+
+      // ------------------ اختيار العملية باستخدام switch ------------------
+      switch (op) {
+        case "add":
+          result = n1 + n2;
+          break;
+        case "sub":
+          result = n1 - n2;
+          break;
+        case "mul":
+          result = n1 * n2;
+          break;
+        case "div":
+          // التحقق من القسمة على صفر
+          if (n2 === 0) {
+            result = "لا يمكن القسمة على صفر";
+          } else {
+            result = n1 / n2;
+          }
+          break;
+        default:
+          result = "عملية غير معروفة";
+      }
+
+      // عرض النتيجة
+      document.getElementById("result").innerHTML = "النتيجة: " + result;
+    }
+  </script>
+
 </body>
 </html>
+
+
 
